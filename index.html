@@ -1,0 +1,41 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title></title>
+</head>
+<body>
+
+<input type="file" id="fileinput" /><br/><br/>
+<textarea rows=15 cols="90" id="area"></textarea>
+<div id="result">Details : </div>
+
+<script type="text/javascript">
+    function readSingleFile(evt) {
+        var f = evt.target.files[0];
+//        console.log(f);
+        if (f) {
+            var r = new FileReader();
+            console.log(r);
+            r.onload = function(e) {
+                console.log(typeof e.target.result);
+                var contents = e.target.result;
+                var result =
+                        "<b>Details :</b> " + "<br>"
+                        +"name: " + f.name + "<br>"
+                        +"type: " + f.type + "<br>"
+                        +"size: " + f.size + " bytes<br>"
+                        + "starts with: " + contents.substr(1, contents.indexOf("<br>"));
+                document.getElementById('result').innerHTML = result;
+                document.getElementById('area').innerText = contents;
+            };
+            r.readAsText(f);
+
+        } else {
+            alert("Failed to load file");
+        }
+    }
+    document.getElementById('fileinput').addEventListener('change', readSingleFile, false);
+</script>
+</body>
+</html>
